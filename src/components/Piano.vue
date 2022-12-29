@@ -88,7 +88,7 @@
       <div class="piano-wrap responsive-section-a" :class="{'visible': pianoShow}">
         <div class="piano-band">
           <img class="piano-band-img" :src="bandImg" alt="">
-          <div class="piano-tip">⇧ 代表 shift 键</div>
+          <div class="piano-tip">⇧ 代表 空格 键</div>
         </div>
         <div class="piano-key-wrap">
           <div class="piano-key wkey" v-for="note in Notes" :key="note.keyCode" :data-keyCode="note.keyCode"
@@ -291,12 +291,12 @@ export default {
     },
     // 键盘操作 核心代码
     bindKeyBoradEvent() {
-      const ShiftKeyCode = 16
+      const SpaceKeyCode = 32
       document.addEventListener('keydown', (e) => {
         let keyCode = e.keyCode;
         if (this.DEV) console.log('keydown', keyCode);
         // 按住Shfit键，则启用黑色按键
-        if (keyCode == ShiftKeyCode) {
+        if (keyCode == SpaceKeyCode) {
           this.enableBlackKey = true
         }
         if (this.enableBlackKey) keyCode = 'b' + keyCode
@@ -321,25 +321,11 @@ export default {
           this.lastKeyCode = keyCode
         }
       }, false)
-      // document.addEventListener('keydown', debounce((e) => {
-      //   let keyCode = e.keyCode;
-      //   let time = +new Date()
-      //   if (this.DEV) console.log('keydown', keyCode);
-      //   // 按住Shfit键，则启用黑色按键
-      //   if (keyCode == ShiftKeyCode) {
-      //     this.enableBlackKey = true
-      //   }
-      //   if (this.enableBlackKey) keyCode = 'b' + keyCode
-      //   this.playNoteByKeyCode(keyCode)
-      //   this.lastKeyCode = keyCode
-      //   this.lastKeyTime = +new Date()
-      // }, 100, { leading: true, trailing: false }), false)
 
       document.addEventListener('keyup', (e) => {
-        // console.log('keyup');
         let keyCode = e.keyCode;
         // 松开Shfit键，则禁用黑色按键
-        if (keyCode == ShiftKeyCode) {
+        if (keyCode == SpaceKeyCode) {
           this.enableBlackKey = false;
         }
         $(`.wkey`).removeClass('wkey-active')
